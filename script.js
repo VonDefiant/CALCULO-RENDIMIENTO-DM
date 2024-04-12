@@ -25,13 +25,35 @@ function calcularRendimiento() {
       <p>KM Final: ${kmFinal}</p>
       <p>Recorrido: ${recorrido} km</p>
       <p>Galonaje: ${galonaje} galones</p>
-      <p>Consumo por galón: ${consumoPorGalon.toFixed(2)} km/galón</p>
+      <p>Rendimiento: ${consumoPorGalon.toFixed(2)} km/galón</p>
       <p>Usuario: ${usuario}</p>
     `;
-  
-  
-    document.getElementById('resultado').innerHTML = resultadoHTML;
+
+    // Abrir una ventana emergente con los resultados
+    const nuevaVentana = window.open('', '_blank', 'width=400,height=400,scrollbars=yes,resizable=yes');
+    nuevaVentana.document.write(`
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Resultado de Rendimiento de Camión</title>
+            <link rel="stylesheet" href="styles.css">
+            <style>
+                /* Estilos adicionales para la ventana emergente */
+                body {
+                    font-size: 16px;
+                    padding: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            ${resultadoHTML}
+        </body>
+        </html>
+    `);
 }
+
 function formatDate(dateString) {
     const date = new Date(dateString + 'T00:00:00Z'); 
     const day = date.getUTCDate().toString().padStart(2, '0');
@@ -39,7 +61,3 @@ function formatDate(dateString) {
     const year = date.getUTCFullYear();
     return `${day}-${month}-${year}`;
 }
-
-
-
-  
