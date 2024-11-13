@@ -53,7 +53,8 @@ form input {
   padding: 20px;
   background: inherit; /* Usa el mismo fondo degradado */
   color: inherit;
-  text-align: left;
+  text-align: center; /* Centra solo el texto */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
+  border-radius: 0px;
 }
+
