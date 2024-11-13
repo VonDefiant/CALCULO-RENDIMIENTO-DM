@@ -18,17 +18,19 @@ function calcularRendimiento() {
 
     // Generar contenido HTML para los resultados
     const resultadoHTML = `
-      <h2>Resultado:</h2>
-      <p>Fecha: ${fechaFormateada}</p>
-      <p>Unidad: ${unidad}</p>
-      <p>Ruta: ${ruta}</p>
-      <p>KM Inicial: ${kmInicial}</p>
-      <p>KM Final: ${kmFinal}</p>
-      <p>Recorrido: ${recorrido} km</p>
-      <p>Galonaje: ${galonaje} galones</p>
-      <p>Rendimiento: ${consumoPorGalon.toFixed(2)} km/galón</p>
-      <p>Usuario: ${usuario}</p>
-      <button onclick="captureAndShare()">Compartir</button>
+      <div class="resultado-container">
+        <h2>Resultado:</h2>
+        <p>Fecha: ${fechaFormateada}</p>
+        <p>Unidad: ${unidad}</p>
+        <p>Ruta: ${ruta}</p>
+        <p>KM Inicial: ${kmInicial}</p>
+        <p>KM Final: ${kmFinal}</p>
+        <p>Recorrido: ${recorrido} km</p>
+        <p>Galonaje: ${galonaje} galones</p>
+        <p>Rendimiento: ${consumoPorGalon.toFixed(2)} km/galón</p>
+        <p>Usuario: ${usuario}</p>
+        <button onclick="captureAndShare()">Compartir</button>
+      </div>
     `;
 
     // Abre una nueva ventana con los resultados y la función de compartir
@@ -44,7 +46,7 @@ function calcularRendimiento() {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
             <script>
                 function captureAndShare() {
-                    const resultElement = document.body;
+                    const resultElement = document.querySelector('.resultado-container');
 
                     if (!navigator.share) {
                         alert("La función de compartir no es compatible con este dispositivo o navegador.");
@@ -70,7 +72,7 @@ function calcularRendimiento() {
                 }
             </script>
         </head>
-        <body>
+        <body class="resultado">
             ${resultadoHTML}
         </body>
         </html>
