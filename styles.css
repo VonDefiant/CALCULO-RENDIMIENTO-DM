@@ -5,12 +5,6 @@ body {
   color: white;
   text-align: center;
   font-size: 16px;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
 }
 
 form {
@@ -52,26 +46,4 @@ form input {
   form input {
       min-width: auto; 
   }
-}
-
-/* Ajustes para la ventana de resultados */
-body.resultado {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-  background: #000428; 
-  background: -webkit-linear-gradient(to right, #004e92, #000428); 
-  background: linear-gradient(to right, #004e92, #000428); 
-}
-
-.resultado-container {
-  background: #f4f4f4;
-  color: #000;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  max-width: 400px;
-  text-align: left;
 }
