@@ -51,25 +51,28 @@ function calcularRendimiento() {
 }
 
 function captureAndShare() {
-    const resultElement = document.body; // Captura todo el contenido de la ventana
+    const resultElement = document.body;
+
+    // Verificar si el navegador es compatible con la API de compartir
+    if (!navigator.share) {
+        alert("La función de compartir no es compatible con este dispositivo o navegador.");
+        return;
+    }
 
     html2canvas(resultElement).then(canvas => {
         canvas.toBlob(blob => {
             const file = new File([blob], "resultado.png", { type: "image/png" });
 
-            if (navigator.share) {
-                navigator.share({
-                    files: [file],
-                    title: 'Resultados del cálculo',
-                    text: 'Aquí están los resultados de mi cálculo.',
-                }).then(() => {
-                    console.log("Compartido exitosamente");
-                }).catch(error => {
-                    console.error("Error al compartir", error);
-                });
-            } else {
-                alert("La función de compartir no es compatible con tu navegador.");
-            }
+            navigator.share({
+                files: [file],
+                title: 'Resultados del cálculo',
+                text: 'Aquí están los resultados de mi cálculo.',
+            }).then(() => {
+                console.log("Compartido exitosamente");
+            }).catch(error => {
+                console.error("Error al compartir", error);
+                alert("Hubo un error al intentar compartir.");
+            });
         });
     });
 }
