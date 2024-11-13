@@ -46,7 +46,7 @@ function calcularRendimiento() {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
             <script>
                 function captureAndShare() {
-                    const resultElement = document.querySelector('.resultado-container');
+                    const resultElement = document.querySelector('.resultado-container'); // Solo captura el contenedor
 
                     if (!navigator.share) {
                         alert("La función de compartir no es compatible con este dispositivo o navegador.");
