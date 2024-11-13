@@ -5,12 +5,6 @@ body {
   color: white;
   text-align: center;
   font-size: 16px;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
 }
 
 form {
@@ -52,15 +46,4 @@ form input {
   form input {
       min-width: auto; 
   }
-}
-
-/* Estilo específico para el contenedor de resultados */
-.resultado-container {
-  max-width: 400px;
-  padding: 20px;
-  background: inherit; /* Usa el mismo fondo degradado */
-  color: inherit;
-  text-align: left;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
 }
