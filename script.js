@@ -18,22 +18,20 @@ function calcularRendimiento() {
 
     // Generar contenido HTML para los resultados
     const resultadoHTML = `
-      <div class="resultado-container">
-        <h2>Resultado:</h2>
-        <p>Fecha: ${fechaFormateada}</p>
-        <p>Unidad: ${unidad}</p>
-        <p>Ruta: ${ruta}</p>
-        <p>KM Inicial: ${kmInicial}</p>
-        <p>KM Final: ${kmFinal}</p>
-        <p>Recorrido: ${recorrido} km</p>
-        <p>Galonaje: ${galonaje} galones</p>
-        <p>Rendimiento: ${consumoPorGalon.toFixed(2)} km/galón</p>
-        <p>Usuario: ${usuario}</p>
-        <button onclick="captureAndShare()">Compartir</button>
-      </div>
+      <h2>Resultado:</h2>
+      <p>Fecha: ${fechaFormateada}</p>
+      <p>Unidad: ${unidad}</p>
+      <p>Ruta: ${ruta}</p>
+      <p>KM Inicial: ${kmInicial}</p>
+      <p>KM Final: ${kmFinal}</p>
+      <p>Recorrido: ${recorrido} km</p>
+      <p>Galonaje: ${galonaje} galones</p>
+      <p>Rendimiento: ${consumoPorGalon.toFixed(2)} km/galón</p>
+      <p>Usuario: ${usuario}</p>
+      <button onclick="window.opener.captureAndShare()">Compartir</button>
     `;
 
-    // Abre una nueva ventana con los resultados y la función de compartir
+    // Abre una nueva ventana con los resultados
     const nuevaVentana = window.open('', '_blank', 'width=400,height=500,scrollbars=yes,resizable=yes');
     nuevaVentana.document.write(`
         <!DOCTYPE html>
@@ -43,41 +41,37 @@ function calcularRendimiento() {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Resultado de Rendimiento de Camión</title>
             <link rel="stylesheet" href="styles.css">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-            <script>
-                function captureAndShare() {
-                    const resultElement = document.querySelector('.resultado-container'); // Solo captura el contenedor
-
-                    if (!navigator.share) {
-                        alert("La función de compartir no es compatible con este dispositivo o navegador.");
-                        return;
-                    }
-
-                    html2canvas(resultElement).then(canvas => {
-                        canvas.toBlob(blob => {
-                            const file = new File([blob], "resultado.png", { type: "image/png" });
-
-                            navigator.share({
-                                files: [file],
-                                title: 'Resultados del cálculo',
-                                text: 'Aquí están los resultados de mi cálculo.',
-                            }).then(() => {
-                                console.log("Compartido exitosamente");
-                            }).catch(error => {
-                                console.error("Error al compartir", error);
-                                alert("Hubo un error al intentar compartir.");
-                            });
-                        });
-                    });
-                }
-            </script>
         </head>
-        <body class="resultado">
+        <body>
             ${resultadoHTML}
         </body>
         </html>
     `);
     nuevaVentana.document.close();
+}
+
+function captureAndShare() {
+    const resultElement = document.body; // Captura todo el contenido de la ventana
+
+    html2canvas(resultElement).then(canvas => {
+        canvas.toBlob(blob => {
+            const file = new File([blob], "resultado.png", { type: "image/png" });
+
+            if (navigator.share) {
+                navigator.share({
+                    files: [file],
+                    title: 'Resultados del cálculo',
+                    text: 'Aquí están los resultados de mi cálculo.',
+                }).then(() => {
+                    console.log("Compartido exitosamente");
+                }).catch(error => {
+                    console.error("Error al compartir", error);
+                });
+            } else {
+                alert("La función de compartir no es compatible con tu navegador.");
+            }
+        });
+    });
 }
 
 function formatDate(dateString) {
