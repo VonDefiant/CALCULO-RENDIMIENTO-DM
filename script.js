@@ -28,10 +28,10 @@ function calcularRendimiento() {
       <p>Galonaje: ${galonaje} galones</p>
       <p>Rendimiento: ${consumoPorGalon.toFixed(2)} km/galón</p>
       <p>Usuario: ${usuario}</p>
-      <button onclick="window.opener.captureAndShare()">Compartir</button>
+      <button onclick="captureAndShare()">Compartir</button>
     `;
 
-    // Abre una nueva ventana con los resultados
+    // Abre una nueva ventana con los resultados y la función de compartir
     const nuevaVentana = window.open('', '_blank', 'width=400,height=500,scrollbars=yes,resizable=yes');
     nuevaVentana.document.write(`
         <!DOCTYPE html>
@@ -41,6 +41,34 @@ function calcularRendimiento() {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Resultado de Rendimiento de Camión</title>
             <link rel="stylesheet" href="styles.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+            <script>
+                function captureAndShare() {
+                    const resultElement = document.body;
+
+                    if (!navigator.share) {
+                        alert("La función de compartir no es compatible con este dispositivo o navegador.");
+                        return;
+                    }
+
+                    html2canvas(resultElement).then(canvas => {
+                        canvas.toBlob(blob => {
+                            const file = new File([blob], "resultado.png", { type: "image/png" });
+
+                            navigator.share({
+                                files: [file],
+                                title: 'Resultados del cálculo',
+                                text: 'Aquí están los resultados de mi cálculo.',
+                            }).then(() => {
+                                console.log("Compartido exitosamente");
+                            }).catch(error => {
+                                console.error("Error al compartir", error);
+                                alert("Hubo un error al intentar compartir.");
+                            });
+                        });
+                    });
+                }
+            </script>
         </head>
         <body>
             ${resultadoHTML}
@@ -48,33 +76,6 @@ function calcularRendimiento() {
         </html>
     `);
     nuevaVentana.document.close();
-}
-
-function captureAndShare() {
-    const resultElement = document.body;
-
-    // Verificar si el navegador es compatible con la API de compartir
-    if (!navigator.share) {
-        alert("La función de compartir no es compatible con este dispositivo o navegador.");
-        return;
-    }
-
-    html2canvas(resultElement).then(canvas => {
-        canvas.toBlob(blob => {
-            const file = new File([blob], "resultado.png", { type: "image/png" });
-
-            navigator.share({
-                files: [file],
-                title: 'Resultados del cálculo',
-                text: 'Aquí están los resultados de mi cálculo.',
-            }).then(() => {
-                console.log("Compartido exitosamente");
-            }).catch(error => {
-                console.error("Error al compartir", error);
-                alert("Hubo un error al intentar compartir.");
-            });
-        });
-    });
 }
 
 function formatDate(dateString) {
