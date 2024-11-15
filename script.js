@@ -29,7 +29,7 @@ function calcularRendimiento() {
         <p>Galonaje: ${galonaje} galones</p>
         <p>Rendimiento: ${consumoPorGalon.toFixed(2)} km/galón</p>
         <p>Usuario: ${usuario}</p>
-        <button onclick="captureAndShare()">Compartir</button>
+        <button onclick="captureAndShare()">Enviar</button>
       </div>
     `;
 
